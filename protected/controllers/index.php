@@ -17,15 +17,34 @@ class Index extends Controller{
     /**
      * 我知道
      * @param id int
-     * @Request (uri="/home", target='get')
+     * @Request (uri="/article", target='get')
      * @return int
      */
-    public function index(){
+    public function getArticle(){
        
-        echo 'home';
+        echo 'get article';
     }
 
-    public function home(){
-        echo 'im home action';
+    /**
+     * @Request(uri='/article', target='post')
+     */
+    public function setArticle(){
+
+        echo 'set article';
+    }
+
+    /**
+     * @Request(uri='/article', target='put')
+     */
+    public function updateArticle(){
+
+        echo 'update article';
+    }
+
+    /**
+     * @Request(uri='/article', target='delete')
+     */
+    public function deleteArticle(){
+        echo 'delete article';
     }
 }
