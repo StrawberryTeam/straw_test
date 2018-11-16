@@ -28,6 +28,7 @@ class Index extends Controller{
      * @return int
      */
     public function getArticle(){
+        var_dump($this->getParams()->getId);
        
         echo 'get article';
     }

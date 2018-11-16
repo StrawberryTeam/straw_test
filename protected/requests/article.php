@@ -26,4 +26,8 @@ class article extends Request {
     public function setId($v){
         return $v . 'set';
     }
+
+    // public function getId(){
+    //     return 'abcId';
+    // }
 }
