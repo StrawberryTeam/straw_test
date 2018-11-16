@@ -1,5 +1,5 @@
 <?php
-namespace controllers;
+namespace controllers\v1;
 use \strawframework\base\Controller;
 
 /**
@@ -13,6 +13,13 @@ class Index extends Controller{
 
     }
 
+    /**
+     * @Request (uri='/index', target='get')
+     */
+    public function index(){
+
+        echo 'home';
+    }
 
     /**
      * 我知道

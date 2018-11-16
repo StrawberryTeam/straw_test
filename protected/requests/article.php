@@ -13,12 +13,17 @@ use strawframework\base\Request;
 class article extends Request {
 
     /**
-     * @Column (name='/id/{}', type='int')
+     * @Column (name='id', type='int')
      */
-    private $id;
+    protected $id;
 
     /**
-     * @Column (name='/{}', type='string')
+     * @Column (name='get_title', type='string')
      */
-    private $title;
+    protected $title;
+
+    //过滤 id
+    public function setId($v){
+        return $v . 'set';
+    }
 }
