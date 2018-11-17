@@ -5,7 +5,7 @@ use Strawframework\Base\Controller;
 /**
  * 
  */
-class Index extends Controller{
+class Test extends Controller{
 
     public function __construct(){
         //加载模板
