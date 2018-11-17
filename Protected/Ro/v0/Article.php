@@ -5,12 +5,12 @@
  * Time: 21:33
  */
 
-namespace Requests;
+namespace Ro\v0;
 
 
-use Strawframework\Base\Request;
+use Strawframework\Base\RequestObject;
 
-class Article extends Request {
+class Article extends RequestObject {
 
     /**
      * @Column (name='id', type='int')

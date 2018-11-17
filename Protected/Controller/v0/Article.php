@@ -1,42 +1,31 @@
 <?php
-namespace Controllers\v1;
+namespace Controller\v0;
 use Strawframework\Base\Controller;
 
 /**
- * 
+ * @Ro (name='Article')
  */
-class Test extends Controller{
+class Article extends Controller{
 
     public function __construct(){
         //加载模板
         parent::__construct($isView=false);
-
     }
 
     /**
-     * @Request (uri='/index', target='get')
+     * @Request (uri="/", target='get')
+     * @Required (column='id, title')
      */
-    public function index(){
-
-        echo 'home';
-    }
-
-    /**
-     * 我知道
-     * @param id int
-     * @Request (uri="/article", target='get')
-     * @return int
-     */
-    public function getArticle(){
+    public function get(){
         var_dump($this->getRequests()->getTitle());
        
         echo 'get article';
     }
 
     /**
-     * @Request(uri='/article', target='post')
+     * @Request(uri='/', target='post')
      */
-    public function setArticle(){
+    public function set(){
 
         echo 'set article';
     }
