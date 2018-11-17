@@ -1,6 +1,6 @@
 <?php
-namespace controllers\v1;
-use \strawframework\base\Controller;
+namespace Controllers\v1;
+use Strawframework\Base\Controller;
 
 /**
  * 
@@ -28,7 +28,7 @@ class Index extends Controller{
      * @return int
      */
     public function getArticle(){
-        var_dump($this->getParams()->getId);
+        var_dump($this->getRequests()->getTitle());
        
         echo 'get article';
     }
