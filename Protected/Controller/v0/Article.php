@@ -1,6 +1,7 @@
 <?php
 namespace Controller\v0;
 use Strawframework\Base\Controller;
+use Strawframework\Base\Error;
 
 /**
  * @Ro (name='Article')
@@ -16,9 +17,11 @@ class Article extends Controller{
      * @Request (uri="/", target='get')
      * @Required (column='id, title')
      */
-    public function get(){
-        var_dump($this->getRequests()->getTitle());
-       
+    public function getInfo(){
+        //var_dump($this->getRequests()->getId());
+
+        //throw new Error('aaa');
+        //throw new \Error\Article('ID_INVALID', 'idabc');
         echo 'get article';
     }
 
