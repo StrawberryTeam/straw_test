@@ -1,3 +1,6 @@
+*
+!.gitignore
+
 # config
 production.config.php
 test.config.php
