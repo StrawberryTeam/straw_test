@@ -1,7 +1,6 @@
 <?php
 namespace Controller\v0;
 use Strawframework\Base\Controller;
-use Strawframework\Base\Error;
 
 /**
  * @Ro (name='Article')

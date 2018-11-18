@@ -1,6 +1,5 @@
 <?php
 namespace Error;
-use Lang\v0\zh_CN\ArticleError;
 
 /**
  * 模块异常报错
@@ -16,7 +15,6 @@ class Article extends \Strawframework\Base\Error {
         'ID_INVALID' => '01'
     ];
 
-    // Strawframework error
     public function __construct(string ...$msgKeyAndValue) {
         //第二个参数为语言包 @todo 配置加载相应语言
         parent::__construct($msgKeyAndValue, 'ArticleError');
