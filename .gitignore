@@ -1,10 +1,6 @@
-*
-!.gitignore
-
 # config
-production.config.php
-test.config.php
-/public/logs
+Protected/Config/production/*
+Public/Log/*
 # phpstorm project files
 .idea
 
