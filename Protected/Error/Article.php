@@ -16,7 +16,7 @@ class Article extends \Strawframework\Base\Error {
     ];
 
     public function __construct(string ...$msgKeyAndValue) {
-        //第二个参数为语言包 @todo 配置加载相应语言
+        //第二个参数为语言包
         parent::__construct($msgKeyAndValue, 'ArticleError');
     }
 }

@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-//更改配置及手动设定当前环境 Public/.env -> APP_ENVIRONMENT = DEVELOPMENT
 
 //php7+ nginx conf: {fastcgi.conf} remove line {open_basedir...}
 

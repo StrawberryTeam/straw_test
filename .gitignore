@@ -1,7 +1,6 @@
 # config
-Public/.env
 Protected/Config/production/*
-Public/Log/*
+Runtime/*
 # phpstorm project files
 .idea
 
