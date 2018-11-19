@@ -19,8 +19,8 @@ class Article extends Controller{
     public function getInfo(){
         //var_dump($this->getRequests()->getId());
 
-        //throw new Error('aaa');
-        //throw new \Error\Article('ID_INVALID', 'idabc');
+        // throw new \Strawframework\Base\Error('aaa');
+        // throw new \Error\Article('ID_INVALID', 'idabc');
         echo 'get article';
     }
 

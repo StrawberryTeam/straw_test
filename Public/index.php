@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //根据环境读取配置文件
 const APP_ENV = 'DEVELOPMENT'; //开发环境配置
 //const APP_ENV = 'PRODUCTION'; //生产环境配置
