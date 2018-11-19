@@ -1,4 +1,5 @@
 # config
+Public/.env
 Protected/Config/production/*
 Public/Log/*
 # phpstorm project files

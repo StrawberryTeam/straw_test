@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
-//根据环境读取配置文件
-const APP_ENV = 'DEVELOPMENT'; //开发环境配置
-//const APP_ENV = 'PRODUCTION'; //生产环境配置
+//更改配置及手动设定当前环境 Public/.env -> APP_ENVIRONMENT = DEVELOPMENT
 
 //php7+ nginx conf: {fastcgi.conf} remove line {open_basedir...}
 
@@ -11,4 +9,4 @@ define('ROOT_PATH', realpath(dirname(__FILE__) . DS . '..' . DS) . DS);
 require_once(ROOT_PATH . 'Strawframework' . DS . 'Common' . DS . 'Main.php');
 
 //Run
-Strawframework\Common\Main::getInstance()->setEnv(APP_ENV)->configure('Straw')->run();
+Strawframework\Common\Main::getInstance()->getEnv()->configure('Straw')->run();
