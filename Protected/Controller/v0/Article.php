@@ -1,7 +1,7 @@
 <?php
 namespace Controller\v0;
 use Strawframework\Base\Controller;
-use Util\Code;
+use Common\Code;
 
 /**
  * @Ro (name='Article')
