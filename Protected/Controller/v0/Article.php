@@ -2,6 +2,7 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller;
 use Common\Code;
+use Strawframework\Base\Result;
 
 /**
  * @Ro (name='Article')
@@ -18,10 +19,9 @@ class Article extends Controller{
      * @Required (column='id, title')
      */
     public function getInfo(){
-        var_dump($this->getRequests()->getId());
 
-
-//        echo 'get article';
+        //throw new \Error\Article('ID_INVALID', $this->getRequests()->getId());
+        return new Result(Code::HTTP_OK, 'ok2322');
     }
 
     /**
