@@ -18,12 +18,10 @@ class Article extends Controller{
      * @Required (column='id, title')
      */
     public function getInfo(){
-        //var_dump($this->getRequests()->getId());
+        var_dump($this->getRequests()->getId());
 
-         //throw new \Strawframework\Base\Error('aaa');
-         //throw new \Error\Article('ID_INVALID', 'idabc');
-        var_dump(Code::SUCCESS);
-        echo 'get article';
+
+//        echo 'get article';
     }
 
     /**
