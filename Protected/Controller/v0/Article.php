@@ -21,9 +21,13 @@ class Article extends Controller{
      */
     public function getInfo(){
 
-        //throw new \Error\Article('ID_INVALID', $this->getRequests()->getId());
-        //return (new Result(Code::HTTP_OK, 'ok2322', null, true))->toJsonp('cl');
-        return (new Result(Code::HTTP_OK, 'ok2322', null));
+        //set Get id 1 | 2
+        $userName = $this->getService('Content')->getUser($this->getRequests()->getId());
+
+        if (empty($userName))
+            return new Result(Code::IS_EMPTY); //httpcode 204 nothing to show
+
+        return new Result(Code::HTTP_OK, '', ['name' => $userName]);
     }
 
     /**
@@ -31,6 +35,8 @@ class Article extends Controller{
      */
     public function set(){
 
+        //throw new \Error\Article('ID_INVALID', $this->getRequests()->getId());
+        //return (new Result(Code::HTTP_OK, 'ok2322', null, true))->toJsonp('cl');
         echo 'set article';
     }
 
