@@ -2,6 +2,7 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller;
 use Common\Code;
+use Strawframework\Base\RequestObject;
 use Strawframework\Base\Result;
 
 /**
@@ -21,7 +22,8 @@ class Article extends Controller{
     public function getInfo(){
 
         //throw new \Error\Article('ID_INVALID', $this->getRequests()->getId());
-        return new Result(Code::HTTP_OK, 'ok2322');
+        //return (new Result(Code::HTTP_OK, 'ok2322', null, true))->toJsonp('cl');
+        return (new Result(Code::HTTP_OK, 'ok2322', null));
     }
 
     /**

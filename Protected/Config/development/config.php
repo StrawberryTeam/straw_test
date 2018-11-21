@@ -15,7 +15,7 @@ return [
     //传入参数格式
     'input_type' => 'form', //form(urlencoded) | json 2种方式都可以传2进制
     //返回参数格式
-    'output_type' => 'json', //json | xml | html
+    'output_type' => 'json', //json | xml | html | jsonp(callback())
     //本应用 module
     'module_name' => 'pi',
     //default database
