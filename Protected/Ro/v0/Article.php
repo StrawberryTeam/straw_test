@@ -1,11 +1,9 @@
 <?php
+namespace Ro\v0;
 /**
- * User: Zack Lee
- * Date: 2018/11/15
- * Time: 21:33
+ * Ro
  */
 
-namespace Ro\v0;
 
 
 use Strawframework\Base\RequestObject;
