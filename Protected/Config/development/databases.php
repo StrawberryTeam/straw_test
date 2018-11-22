@@ -6,7 +6,7 @@ return [
     //mongo example
     'mongo' => [
         'DB_TYPE' => 'mongodb',
-        'DB_HOST' => '127.0.0.1',
+        'DB_HOST' => '127.0.0.1', //读写分离多台逗号分割,　第一台为主写其他读 127.0.0.1,127.0.0.2,127.0.0.3
         'DB_USER' => '',
         'DB_PWD'  => '',
         'WRITE_MASTER' => false, //读写分离
