@@ -4,6 +4,7 @@ use Strawframework\Base\Controller;
 use Common\Code;
 use Strawframework\Base\RequestObject;
 use Strawframework\Base\Result;
+use Strawframework\Common\Funs;
 
 /**
  * @Ro (name='Article')

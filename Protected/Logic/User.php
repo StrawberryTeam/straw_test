@@ -2,6 +2,7 @@
 namespace Logic;
 use Dvo\Relation;
 use Strawframework\Base\Logic;
+use Strawframework\Common\Funs;
 
 /**
  * user logic
@@ -9,6 +10,12 @@ use Strawframework\Base\Logic;
 
 class User extends Logic {
 
+    /**
+     * @param int $uid
+     *
+     * @return null|string
+     * @throws \Exception
+     */
     public function getName(int $uid): ? string{
         $entity = new Relation();
         $entity->setUserName('newname');

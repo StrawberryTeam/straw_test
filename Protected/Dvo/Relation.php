@@ -6,6 +6,17 @@ use Strawframework\Base\DataViewObject;
 /**
  * Dvo
  * 数据字段可用类型 ['int', 'string', 'bool', 'array', 'object'] 或其他 object 需要带命名空间 \MongoDB\BSON\ObjectID
+ *
+ * # For PHPStorm autocomplete
+ * @property $getId
+ * @method static DataViewObject getId()
+ * @property $setId
+ * @method static DataViewObject setId(string|object $id)
+ *
+ * @property $getUserName
+ * @method static DataViewObject getUserName(string $userName)
+ * @property $setUserName
+ * @method static DataViewObject setUserName(string $userName)
  */
 
 class Relation extends DataViewObject {

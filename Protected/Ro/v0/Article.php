@@ -1,17 +1,15 @@
 <?php
 namespace Ro\v0;
+use Strawframework\Base\RequestObject;
+
 /**
  * Ro
  */
-
-
-
-use Strawframework\Base\RequestObject;
-
 class Article extends RequestObject {
 
     /**
      * @Column (name='id', type='int')
+     * RequestObject
      */
     protected $id;
 
