@@ -12,7 +12,11 @@ class Article extends \Strawframework\Base\Error {
 
     //占位符 => 错误码
     protected $errorCode = [
-        'ID_INVALID' => '01'
+        'ID_INVALID' => '01',
+        'INPUT_ERROR' => '02',
+        'SEX_INVALID' => '03',
+        'AGE_INVALID' => '04',
+        'USER_EXISTS' => '05',
     ];
 
     public function __construct(string ...$msgKeyAndValue) {

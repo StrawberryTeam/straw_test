@@ -11,7 +11,7 @@ return [
         'DB_PWD'  => '',
         'WRITE_MASTER' => false, //读写分离
         'DB_PREFIX' => '',
-        'DB_NAME' => 'pi_2017',
+        'DB_NAME' => 'kiwi_pro',
         'DB_PORT' => 27017
     ],
 

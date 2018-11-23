@@ -1,10 +1,7 @@
 <?php
 namespace Controller\v0;
-use Strawframework\Base\Controller;
-use Common\Code;
-use Strawframework\Base\RequestObject;
-use Strawframework\Base\Result;
-use Strawframework\Common\Funs;
+use Strawframework\Base\Controller, Strawframework\Base\Result;
+use Logic\User, Common\Code;
 
 /**
  * @Ro (name='Article')
@@ -32,13 +29,29 @@ class Article extends Controller{
     }
 
     /**
+     * 添加一个新用户
      * @Request(uri='/', target='post')
+     * @Required (column='userName, sex, age')
+     * @throws \Error\Article
+     * @throws \Exception
      */
-    public function set(){
+    public function addUser(){
 
-        //throw new \Error\Article('ID_INVALID', $this->getRequests()->getId());
-        //return (new Result(Code::HTTP_OK, 'ok2322', null, true))->toJsonp('cl');
-        echo 'set article';
+        //性别合法性
+        if (!in_array($this->getRequests()->getSex(), [User::SEX_MALE, User::SEX_FEMALE]))
+            throw new \Error\Article('SEX_INVALID', $this->getRequests()->getSex(), User::SEX_MALE . ' or ' . User::SEX_FEMALE);
+
+        //年龄合法性
+        if ((User::AGE_MIN <=> $this->getRequests()->getAge()) > 0 || (User::AGE_MAX <=> $this->getRequests()->getAge()) < 0)
+            throw new \Error\Article('AGE_INVALID', $this->getRequests()->getAge());
+
+
+        $result = $this->getService('Member')->addUser($this->getRequests());
+
+        if (false == $result)
+            return new Result(Code::FAIL);
+
+        return new Result(Code::SUCCESS);
     }
 
     /**

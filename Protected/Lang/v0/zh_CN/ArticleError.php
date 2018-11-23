@@ -5,5 +5,9 @@
 
 return [
     'ID_INVALID' => 'Article id %s invalid.',
+    'INPUT_ERROR' => 'Input %s invalid.',
+    'SEX_INVALID' => 'Input sex %s not in %s.',
+    'AGE_INVALID' => 'Input age %d invalid.',
+    'USER_EXISTS' => 'User name %s exists.',
 ];
 

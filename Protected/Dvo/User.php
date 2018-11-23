@@ -1,10 +1,12 @@
 <?php
 namespace Dvo;
+use Error\Article;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Strawframework\Base\DataViewObject;
 
 /**
- * Dvo
+ * User
  */
 
 class User extends DataViewObject {
@@ -19,9 +21,36 @@ class User extends DataViewObject {
     protected $id;
 
     /**
-     * @Column (name='user_name', type='int')
+     * 用户名称
+     * @Column (name='user_name', type='string')
      */
     protected $userName;
+
+    /**
+     * @Column (name='set', type='string')
+     */
+    protected $sex;
+
+    /**
+     * @Column (name='age', type='int')
+     */
+    protected $age;
+
+    /**
+     * @Column (name='follower', type='array')
+     */
+    protected $follower;
+
+    /**
+     * @Column (name='following', type='array')
+     */
+    protected $following;
+
+    /**
+     * 加入时间
+     * @Column (name='join_time', type='\MongoDB\BSON\UTCDateTime')
+     */
+    protected $joinTime;
 
     /**
      * @Column (name='update_at', type='\MongoDB\BSON\UTCDateTime')
@@ -40,9 +69,43 @@ class User extends DataViewObject {
      * ReadOnly or System write Column
      * @return $this
      */
-    public function setUpdateAt(): Relation
+    public function setUpdateAt(): User
     {
         $this->updateAt = new UTCDateTime();
         return $this;
     }
+
+    /**
+     * 关注了新的人
+     * @param array $follow
+     *
+     * @return User
+     * @throws Article
+     */
+    public function setFollowing(array $follow): User{
+
+        $_convert = [
+            'uid' => function($id) : ObjectId{
+                return new ObjectId($id);
+            },
+            'follow_msg' => function($followMsg): String{
+                return $followMsg;
+            }
+        ];
+
+        foreach ($follow as $key => $value) {
+            foreach ($value as $k => $v) {
+                try {
+                    $follow[$key]->$k = $_convert[$k]($v);
+                }catch (\Error $e){
+                    throw new Article('INPUT_ERROR', $key . ' -> ' . $k);
+                }
+            }
+        }
+
+        $follow['follow_time'] = new UTCDateTime();
+        $this->following = $follow;
+        return $this;
+    }
+
 }
