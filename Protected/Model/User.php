@@ -1,6 +1,8 @@
 <?php
 namespace Model;
 use Dvo\User as UserDvo;
+use MongoDB\BSON\UTCDateTime;
+use MongoDB\Model\BSONDocument;
 use Strawframework\Base\Model;
 
 /**
@@ -26,10 +28,9 @@ class User extends Model {
      *
      * @return array|null
      */
-    public function getUser(UserDvo $dvo): ? object {
+    public function getUser(UserDvo $dvo): object {
 
         $res = $this->query($dvo)->getOne();
-        var_dump($this->toArray($res));die;
         return $res;
     }
 
@@ -42,6 +43,8 @@ class User extends Model {
      */
     public function addUser(UserDvo $dvo): bool{
 
+        $dvo->setJoinTime(new UTCDateTime());
+        $dvo->setUpdateAt();
         return $this->insert($dvo)->getInsertedCount() > 0 ? true : false;
     }
 

@@ -1,7 +1,11 @@
 <?php
 namespace Logic;
 use Dvo\Relation;
+use function MongoDB\BSON\fromPHP;
+use function MongoDB\BSON\toPHP;
+use MongoDB\BSON\UTCDateTime;
 use Strawframework\Base\Logic;
+use Strawframework\Base\Model;
 use Strawframework\Base\RequestObject;
 
 /**
@@ -48,6 +52,8 @@ class User extends Logic {
         $dvo->setUserName($name);
         $userInfo = $this->getModel('User')->getUser($dvo);
         var_dump($userInfo);die;
+        if ($userInfo)
+            return true;
         return false;
     }
 
