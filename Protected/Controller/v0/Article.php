@@ -1,7 +1,8 @@
 <?php
 namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
-use Logic\User, Common\Code;
+use Common\Code;
+use Strawframework\Base\Model;
 
 /**
  * @Ro (name='Article')
@@ -14,18 +15,32 @@ class Article extends Controller{
     }
 
     /**
+     * 取一个用户
      * @Request (uri="/", target='get')
-     * @Required (column='id, title')
+     * @Required (column='id')
+     * @return Result
+     * @throws \Exception
      */
     public function getInfo(){
 
         //set Get id 1 | 2
-        $userName = $this->getService('Content')->getUser($this->getRequests()->getId());
+        $userInfo = $this->getService('Member')->getUser($this->getRequests()->getId());
 
-        if (empty($userName))
+        if (!$userInfo)
             return new Result(Code::IS_EMPTY); //httpcode 204 nothing to show
 
-        return new Result(Code::HTTP_OK, '', ['name' => $userName]);
+        return new Result(Code::HTTP_OK, '', Model::toArray($userInfo));
+    }
+
+    /**
+     * 取用户列表
+     * @Request (uri="/list", target='get')
+     * @return Result
+     * @throws \Exception
+     */
+    public function getList(){
+
+        $userList = $this->getService('Member')->getUserList($this->getRequests());
     }
 
     /**
@@ -36,15 +51,6 @@ class Article extends Controller{
      * @throws \Exception
      */
     public function addUser(){
-
-        //性别合法性
-        if (!in_array($this->getRequests()->getSex(), [User::SEX_MALE, User::SEX_FEMALE]))
-            throw new \Error\Article('SEX_INVALID', $this->getRequests()->getSex(), User::SEX_MALE . ' or ' . User::SEX_FEMALE);
-
-        //年龄合法性
-        if ((User::AGE_MIN <=> $this->getRequests()->getAge()) > 0 || (User::AGE_MAX <=> $this->getRequests()->getAge()) < 0)
-            throw new \Error\Article('AGE_INVALID', $this->getRequests()->getAge());
-
 
         $result = $this->getService('Member')->addUser($this->getRequests());
 

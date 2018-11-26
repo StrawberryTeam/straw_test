@@ -19,6 +19,13 @@ class Article extends \Strawframework\Base\Error {
         'USER_EXISTS' => '05',
     ];
 
+    /**
+     * Article constructor.
+     *
+     * @param string ...$msgKeyAndValue
+     *
+     * @throws \Exception
+     */
     public function __construct(string ...$msgKeyAndValue) {
         //第二个参数为语言包
         parent::__construct($msgKeyAndValue, 'ArticleError');

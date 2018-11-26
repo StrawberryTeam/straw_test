@@ -29,9 +29,19 @@ class Article extends RequestObject {
     protected $age;
 
     /**
+     * @Column (name='age_range', type='string')
+     */
+    protected $ageRange;
+
+    /**
      * @Column (name='follow', type='string')
      */
     protected $follow;
+
+    /**
+     * @Column (name='join_time', type='string')
+     */
+    protected $joinTime;
 
     //自定义过滤器
     public function setUserName($v) {

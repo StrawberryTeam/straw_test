@@ -57,6 +57,7 @@ class User extends DataViewObject {
      */
     protected $updateAt;
 
+
     /*
      * 自定义取值
      */

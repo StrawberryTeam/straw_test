@@ -28,7 +28,7 @@ class User extends Model {
      *
      * @return array|null
      */
-    public function getUser(UserDvo $dvo): object {
+    public function getUser(UserDvo $dvo):? object {
 
         $res = $this->query($dvo)->getOne();
         return $res;

@@ -1,12 +1,14 @@
 <?php
 namespace Logic;
 use Dvo\Relation;
+use Error\Article;
 use function MongoDB\BSON\fromPHP;
 use function MongoDB\BSON\toPHP;
 use MongoDB\BSON\UTCDateTime;
 use Strawframework\Base\Logic;
 use Strawframework\Base\Model;
 use Strawframework\Base\RequestObject;
+use Strawframework\Common\Funs;
 
 /**
  * user logic
@@ -25,19 +27,45 @@ class User extends Logic {
     //最大年龄
     const AGE_MAX = 99;
 
+    public function getUserList(RequestObject $ro, ? array $ages): ? array{
+
+        $dvo = new \Dvo\User($ro, 'sex');
+        $dvo->setAge($ages['minAge']);
+        //$dvo->setJoinTime(new UTCDateTime(strtotime($ro->getJoinTime())* 1000));
+
+        $data = [];
+        if ($ro->getSex()){
+            $data['sex'] = ':sex';
+            $data['age2'] = ':sex2';
+        }
+
+        if (!empty($ages)){
+            $data['age'] = ['$gt' => ':age'];
+        }
+
+        $list = $this->getModel('User')->data($data)->query($dvo)->getAll();
+        var_dump($list);die;
+        return $list;
+    }
+
     /**
-     * @param int $uid
+     * 通过 id 获取一个用户的信息
+     * @param string $id
      *
-     * @return null|string
+     * @return null|object
      * @throws \Exception
      */
-    public function getName(int $uid): ? string{
-        $entity = new Relation();
-        $entity->setUserName('newname');
-        $entity->setUpdateAt();
-        //$entity2 = new \Dvo\User('User');
-        //$entity2->setUserName('newname2');
-        return $this->getModel('Relation')->getRelationViaUid($uid);
+    public function getUserViaId(string $id): ? object{
+        $dvo = new \Dvo\User();
+        $dvo->setId($id);
+        try{
+            $userInfo = $this->getModel('User')->getUser($dvo);
+        }catch (\Exception $e){
+
+            //@todo set log
+            throw new Article('INPUT_ERROR', $id);
+        }
+        return $userInfo;
     }
 
     /**
@@ -45,13 +73,13 @@ class User extends Logic {
      * @param string $name
      *
      * @return bool
+     * @throws \Exception
      */
     public function existsName(string $name): bool{
-
         $dvo = new \Dvo\User();
         $dvo->setUserName($name);
         $userInfo = $this->getModel('User')->getUser($dvo);
-        var_dump($userInfo);die;
+        //var_dump(Model::toArray($userInfo));die;
         if ($userInfo)
             return true;
         return false;

@@ -1,6 +1,7 @@
 <?php
 namespace Service;
 use Error\Article;
+use Logic\User;
 use Strawframework\Base\RequestObject;
 use Strawframework\Base\Service;
 
@@ -10,13 +11,56 @@ use Strawframework\Base\Service;
 
 class Member extends Service {
 
+    public function getUserList(RequestObject $ro):? array{
+        //传入条件 sex
+        if ($ro->getSex()){
+            if (false == $this->validSex($ro->getSex()))
+                throw new Article('SEX_INVALID', $ro->getSex(), User::SEX_MALE . ' or ' . User::SEX_FEMALE);
+        }
 
-    public function get(){
-        return $this->getModel('Relation')->getRelationViaUid(12);//Get Model 验证
+        //传入条件 age 10-20
+        if ($ro->getAgeRange()){
+            list($minAge, $maxAge) = explode('-', $ro->getAgeRange());
+
+            if (!$minAge || !$maxAge)
+                throw new Article('INPUT_ERROR', 'age');
+
+            if (false == $this->validAge($minAge))
+                throw new Article('AGE_INVALID', $ro->getAgeRange());
+
+
+            if (false == $this->validAge($maxAge))
+                throw new Article('AGE_INVALID', $ro->getAgeRange());
+        }
+
+        return $this->getLogic('User')->getUserList($ro, compact('minAge', 'maxAge'));
     }
 
-    public function getUser(int $uid):? string{
-        return $this->getLogic('User')->getName($uid);
+    /**
+     * 获取一个用户
+     * @param string $uid
+     *
+     * @return null|object
+     * @throws \Exception
+     */
+    public function getUser(string $uid):? object {
+        return $this->getLogic('User')->getUserViaId($uid);
+    }
+
+    //性别合法性
+    private function validSex(string $sex): bool{
+        if (!in_array($sex, [User::SEX_MALE, User::SEX_FEMALE]))
+            return false;
+
+        return true;
+    }
+
+    //年龄合法性
+    private function validAge(int $age): bool{
+        if ($age < User::AGE_MIN || $age > User::AGE_MAX)
+            return false;
+
+        return true;
     }
 
     /**
@@ -25,8 +69,15 @@ class Member extends Service {
      *
      * @return bool
      * @throws Article
+     * @throws \Exception
      */
     public function addUser(RequestObject $ro): bool{
+
+        if (false == $this->validSex($ro->getSex()))
+            throw new Article('SEX_INVALID', $ro->getSex(), User::SEX_MALE . ' or ' . User::SEX_FEMALE);
+
+        if (false == $this->validAge($ro->getAge()))
+            throw new Article('AGE_INVALID', $ro->getAge());
 
         //用户名称是否存在
         if (true == $this->getLogic('User')->existsName($ro->getUserName()))
