@@ -27,7 +27,7 @@ class User extends DataViewObject {
     protected $userName;
 
     /**
-     * @Column (name='set', type='string')
+     * @Column (name='sex', type='string')
      */
     protected $sex;
 

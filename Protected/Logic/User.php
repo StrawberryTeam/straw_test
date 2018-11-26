@@ -30,21 +30,35 @@ class User extends Logic {
     public function getUserList(RequestObject $ro, ? array $ages): ? array{
 
         $dvo = new \Dvo\User($ro, 'sex');
-        $dvo->setAge($ages['minAge']);
-        //$dvo->setJoinTime(new UTCDateTime(strtotime($ro->getJoinTime())* 1000));
+        //相同字段 不同值 设置别名 别名类型与原名 需完全相同，遵循原名 set 方法
+        $dvo->_setAlias('age', 'minAge', $ages['minAge']);
+        $dvo->_setAlias('age', 'maxAge', $ages['maxAge']);
+
+        //根据加入时间查询
+        //if ($ro->getJoinTime())
+        //    $dvo->setJoinTime(new UTCDateTime(strtotime($ro->getJoinTime())* 1000));
+
 
         $data = [];
+        //查不同性别
         if ($ro->getSex()){
             $data['sex'] = ':sex';
-            $data['age2'] = ':sex2';
         }
 
+        //查年龄范围
         if (!empty($ages)){
-            $data['age'] = ['$gt' => ':age'];
+            $data['$or'] = [
+                ['age' => ['$gte' => ':_minAge']],
+                ['age' => ['$lte' => ':_maxAge']],
+            ];
         }
 
-        $list = $this->getModel('User')->data($data)->query($dvo)->getAll();
-        var_dump($list);die;
+        $list = $this->getModel('User')->getList($dvo, $data);
+        echo json_encode(Model::toArray($list));die;
+        foreach ($list as $doc) {
+            var_dump($doc);
+        }
+        //var_dump($list);die;
         return $list;
     }
 

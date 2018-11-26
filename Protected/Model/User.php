@@ -2,6 +2,7 @@
 namespace Model;
 use Dvo\User as UserDvo;
 use MongoDB\BSON\UTCDateTime;
+use MongoDB\Driver\Cursor;
 use MongoDB\Model\BSONDocument;
 use Strawframework\Base\Model;
 
@@ -32,6 +33,19 @@ class User extends Model {
 
         $res = $this->query($dvo)->getOne();
         return $res;
+    }
+
+    /**
+     * 获取用户列表
+     * @param UserDvo    $dvo
+     * @param array|null $query
+     *
+     * @return array|null
+     */
+    public function getList(UserDvo $dvo, ? array $query = []):? object{
+        $list = $this->data($query)->query($dvo)->getAll();
+        //echo json_encode($this->db);die;
+        return $list;
     }
 
     /**
