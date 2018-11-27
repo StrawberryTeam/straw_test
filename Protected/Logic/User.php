@@ -1,5 +1,6 @@
 <?php
 namespace Logic;
+use Service\Member;
 use Strawframework\Base\Logic;
 use Strawframework\Base\RequestObject;
 
@@ -28,7 +29,7 @@ class User extends Logic {
      * @return array|null
      * @throws \Exception
      */
-    public function getUserList(RequestObject $ro, ? array $ages): ? array{
+    public function getUserList(RequestObject $ro, ? array $ages): array{
 
         $dvo = new \Dvo\User($ro, 'sex');
         //相同字段 不同值 设置别名 别名类型与原名 需完全相同，遵循原名 set 方法
@@ -113,5 +114,14 @@ class User extends Logic {
         $dvo->setUserName($ro->getUserName())->setSex($ro->getSex())->setAge($ro->getAge());
 
         return $this->getModel('User')->addUser($dvo);
+    }
+
+    //更新用户信息
+    public function modifyUser(RequestObject $ro): bool{
+        $filter = new \Dvo\User($ro, 'id');
+
+        $dvo = new \Dvo\User($ro, implode(',', Member::MODIFY_AVAILABLE_FILED));
+
+        var_dump($filter, $dvo);die;
     }
 }

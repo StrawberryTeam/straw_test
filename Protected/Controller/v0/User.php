@@ -65,6 +65,7 @@ class User extends Controller{
 
     /**
      * @Request(uri='/', target='put')
+     * @Required(column='id')
      */
     public function modifyUser(){
 

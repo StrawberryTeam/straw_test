@@ -98,8 +98,11 @@ class Member extends Service {
         return $this->getLogic('User')->addUser($ro);
     }
 
+    //允许编辑的字段
+    const MODIFY_AVAILABLE_FILED = ['userName', 'sex', 'age'];
     //编辑用户
-    public function modifyUser(): bool{
+    public function modifyUser(RequestObject $ro): bool{
 
+        return $this->getLogic('User')->modifyUser($ro);
     }
 }
