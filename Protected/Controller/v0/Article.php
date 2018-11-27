@@ -1,6 +1,7 @@
 <?php
 namespace Controller\v0;
 use Strawframework\Base\Controller;
+use Strawframework\Base\Log;
 use Common\Code;
 
 /**
@@ -18,10 +19,7 @@ class Article extends Controller{
      * @Required (column='id, title')
      */
     public function getInfo(){
-        var_dump($this->getRequests()->getId());
-
-
-//        echo 'get article';
+        var_dump(Log::getInstance()->info('测试测试测试222',(array)$this->getRequests()));
     }
 
     /**

@@ -24,5 +24,6 @@ return [
     'ext' => [
         'databases',
         'caches',
+        'log'
     ]
 ];
