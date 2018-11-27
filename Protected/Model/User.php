@@ -1,6 +1,8 @@
 <?php
 namespace Model;
 use Dvo\User as UserDvo;
+use function MongoDB\BSON\fromPHP;
+use function MongoDB\BSON\toJSON;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Driver\Cursor;
 use MongoDB\Model\BSONDocument;
@@ -42,10 +44,20 @@ class User extends Model {
      *
      * @return array|null
      */
-    public function getList(UserDvo $dvo, ? array $query = []):? object{
+    public function getList(UserDvo $dvo, ? array $query = []):? array{
         $list = $this->data($query)->query($dvo)->getAll();
-        //echo json_encode($this->db);die;
         return $list;
+    }
+
+    /**
+     * 用户总数
+     * @param UserDvo    $dvo
+     * @param array|null $query
+     *
+     * @return int|null
+     */
+    public function getCount(UserDvo $dvo, ? array $query = []):? int{
+        return $this->data($query)->query($dvo)->count();
     }
 
     /**
@@ -62,11 +74,4 @@ class User extends Model {
         return $this->insert($dvo)->getInsertedCount() > 0 ? true : false;
     }
 
-    public function getRelationViaUid(int $uid): ?string{
-        $relations = [
-            1 => 'zl',
-            2 => 'hz'
-        ];
-        return $relations[$uid];
-    }
 }

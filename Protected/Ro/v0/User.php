@@ -5,7 +5,7 @@ use Strawframework\Base\RequestObject;
 /**
  * Ro
  */
-class Article extends RequestObject {
+class User extends RequestObject {
 
     /**
      * @Column (name='id', type='string')

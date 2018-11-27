@@ -2,17 +2,11 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
 use Common\Code;
-use Strawframework\Base\Model;
 
 /**
- * @Ro (name='Article')
+ * @Ro (name='User')
  */
-class Article extends Controller{
-
-    public function __construct(){
-        //加载模板
-        parent::__construct($isView=false);
-    }
+class User extends Controller{
 
     /**
      * 取一个用户
@@ -29,7 +23,7 @@ class Article extends Controller{
         if (!$userInfo)
             return new Result(Code::IS_EMPTY); //httpcode 204 nothing to show
 
-        return new Result(Code::HTTP_OK, '', Model::toArray($userInfo));
+        return new Result(Code::SUCCESS, '', $userInfo);
     }
 
     /**
@@ -40,14 +34,19 @@ class Article extends Controller{
      */
     public function getList(){
 
-        $userList = $this->getService('Member')->getUserList($this->getRequests());
+        list($count, $list) = $this->getService('Member')->getUserList($this->getRequests());
+
+        if (0 == $count)
+            return new Result(Code::IS_EMPTY); //httpcode 204 nothing to show
+
+        return new Result(Code::SUCCESS, '', compact('count', 'list'));
     }
 
     /**
      * 添加一个新用户
      * @Request(uri='/', target='post')
      * @Required (column='userName, sex, age')
-     * @throws \Error\Article
+     * @throws \Error\User
      * @throws \Exception
      */
     public function addUser(){
@@ -61,11 +60,11 @@ class Article extends Controller{
     }
 
     /**
-     * @Request(uri='/article', target='put')
+     * @Request(uri='/', target='put')
      */
-    public function updateArticle(){
+    public function modifyUser(){
 
-        echo 'update article';
+        $this->getService('Member')->modifyUser($this->getRequests());
     }
 
     /**

@@ -1,14 +1,7 @@
 <?php
 namespace Logic;
-use Dvo\Relation;
-use Error\Article;
-use function MongoDB\BSON\fromPHP;
-use function MongoDB\BSON\toPHP;
-use MongoDB\BSON\UTCDateTime;
 use Strawframework\Base\Logic;
-use Strawframework\Base\Model;
 use Strawframework\Base\RequestObject;
-use Strawframework\Common\Funs;
 
 /**
  * user logic
@@ -27,6 +20,14 @@ class User extends Logic {
     //最大年龄
     const AGE_MAX = 99;
 
+    /**
+     * 获取所有用户
+     * @param RequestObject $ro
+     * @param array|null    $ages
+     *
+     * @return array|null
+     * @throws \Exception
+     */
     public function getUserList(RequestObject $ro, ? array $ages): ? array{
 
         $dvo = new \Dvo\User($ro, 'sex');
@@ -47,19 +48,18 @@ class User extends Logic {
 
         //查年龄范围
         if (!empty($ages)){
-            $data['$or'] = [
+            $data['$and'] = [
                 ['age' => ['$gte' => ':_minAge']],
                 ['age' => ['$lte' => ':_maxAge']],
             ];
         }
 
+        $count = $this->getModel('User')->getCount($dvo, $data);
+        if (0 == $count)
+            return [0, null];
+
         $list = $this->getModel('User')->getList($dvo, $data);
-        echo json_encode(Model::toArray($list));die;
-        foreach ($list as $doc) {
-            var_dump($doc);
-        }
-        //var_dump($list);die;
-        return $list;
+        return [$count, $list];
     }
 
     /**
@@ -77,7 +77,7 @@ class User extends Logic {
         }catch (\Exception $e){
 
             //@todo set log
-            throw new Article('INPUT_ERROR', $id);
+            throw new \Error\User('INPUT_ERROR', $id);
         }
         return $userInfo;
     }

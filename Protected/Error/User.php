@@ -5,7 +5,7 @@ namespace Error;
  * 模块异常报错
  */
 
-class Article extends \Strawframework\Base\Error {
+class User extends \Strawframework\Base\Error {
 
     //当前模块的 Error code 10 Strawframework 保留
     protected $code = '11';
@@ -28,6 +28,6 @@ class Article extends \Strawframework\Base\Error {
      */
     public function __construct(string ...$msgKeyAndValue) {
         //第二个参数为语言包
-        parent::__construct($msgKeyAndValue, 'ArticleError');
+        parent::__construct($msgKeyAndValue, 'UserError');
     }
 }

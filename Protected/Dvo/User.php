@@ -1,6 +1,5 @@
 <?php
 namespace Dvo;
-use Error\Article;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Strawframework\Base\DataViewObject;
@@ -57,6 +56,19 @@ class User extends DataViewObject {
      */
     protected $updateAt;
 
+    public function getId(): string
+    {
+        return (string)$this->id;
+    }
+
+    /**
+     * 返回注册时间格式
+     * @return string
+     */
+    public function getJoinTime(): string
+    {
+        return $this->joinTime->toDateTime()->format('Y-m-d H:i:s');
+    }
 
     /*
      * 自定义取值
@@ -78,10 +90,11 @@ class User extends DataViewObject {
 
     /**
      * 关注了新的人
+     *
      * @param array $follow
      *
      * @return User
-     * @throws Article
+     * @throws User
      */
     public function setFollowing(array $follow): User{
 
@@ -99,7 +112,7 @@ class User extends DataViewObject {
                 try {
                     $follow[$key]->$k = $_convert[$k]($v);
                 }catch (\Error $e){
-                    throw new Article('INPUT_ERROR', $key . ' -> ' . $k);
+                    throw new \Error\User('INPUT_ERROR', $key . ' -> ' . $k);
                 }
             }
         }
