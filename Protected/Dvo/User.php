@@ -7,7 +7,6 @@ use Strawframework\Base\DataViewObject;
 /**
  * User
  */
-
 class User extends DataViewObject {
     /**
      * @var array

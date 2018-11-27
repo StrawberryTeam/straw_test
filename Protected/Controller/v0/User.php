@@ -17,7 +17,6 @@ class User extends Controller{
      * @Request (uri="/", target='get')
      * @Required (column='id')
      * @return Result
-     * @throws \Exception
      */
     public function getInfo(){
 
@@ -34,7 +33,6 @@ class User extends Controller{
      * 取用户列表
      * @Request (uri="/list", target='get')
      * @return Result
-     * @throws \Exception
      */
     public function getList(){
 
@@ -51,7 +49,6 @@ class User extends Controller{
      * @Request(uri='/', target='post')
      * @Required (column='userName, sex, age')
      * @throws \Error\User
-     * @throws \Exception
      */
     public function addUser(){
 
@@ -60,22 +57,34 @@ class User extends Controller{
         if (false == $result)
             return new Result(Code::FAIL);
 
-        return new Result(Code::SUCCESS);
+        return new Result(Code::CREATED);
     }
 
     /**
+     * 更新一个用户信息 @todo 更新值(post)或和条件值(get) 有相同字段 如果处理 Ro
      * @Request(uri='/', target='put')
      * @Required(column='id')
+     * @return Result
+     * @throws \Error\User
      */
     public function modifyUser(){
 
-        $this->getService('Member')->modifyUser($this->getRequests());
+        $modifyNum = $this->getService('Member')->modifyUser($this->getRequests());
+
+        return new Result(Code::SUCCESS, '', ['modify_num' => $modifyNum]);
     }
 
     /**
-     * @Request(uri='/article', target='delete')
+     * 删除一个用户
+     * @Request(uri='/', target='delete')
+     * @Required(column='id')
+     * @return Result
+     * @throws \Exception
      */
-    public function deleteArticle(){
-        echo 'delete article';
+    public function removeUser(){
+
+        $removeNum = $this->getService('Member')->removeUser($this->getRequests());
+
+        return new Result(Code::SUCCESS, '', ['remove_num' => $removeNum]);
     }
 }

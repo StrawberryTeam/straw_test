@@ -29,7 +29,8 @@ class User extends Model {
      * 获取一个用户的信息
      * @param UserDvo $dvo
      *
-     * @return array|null
+     * @return object|null
+     * @throws \Exception
      */
     public function getUser(UserDvo $dvo):? object {
 
@@ -74,4 +75,28 @@ class User extends Model {
         return $this->insert($dvo)->getInsertedCount() > 0 ? true : false;
     }
 
+    /**
+     * 更新用户信息
+     * @param UserDvo $filter
+     * @param UserDvo $dvo
+     *
+     * @return int 更新条数
+     * @throws \Error\User 未匹配到更新条件
+     */
+    public function modifyUser(UserDvo $filter, UserDvo $dvo): int{
+        $dvo->setUpdateAt();
+
+        $result = $this->update($dvo, $filter);
+
+        //未匹配到数据
+        if (0 == $result->getMatchedCount())
+            throw new \Error\User('MODIFY_NOTFOUND', $filter->getId());
+
+        return $result->getModifiedCount();
+    }
+
+    public function removeUser(UserDvo $dvo): int{
+
+        return $this->delete($dvo);
+    }
 }

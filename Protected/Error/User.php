@@ -17,6 +17,8 @@ class User extends \Strawframework\Base\Error {
         'SEX_INVALID' => '03',
         'AGE_INVALID' => '04',
         'USER_EXISTS' => '05',
+        'MODIFY_PARAM_INVALID' => '06',
+        'MODIFY_NOTFOUND' => '07',
     ];
 
     /**
@@ -24,7 +26,6 @@ class User extends \Strawframework\Base\Error {
      *
      * @param string ...$msgKeyAndValue
      *
-     * @throws \Exception
      */
     public function __construct(string ...$msgKeyAndValue) {
         //第二个参数为语言包

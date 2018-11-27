@@ -23,23 +23,19 @@ class User extends Logic {
 
     /**
      * 获取所有用户
-     * @param RequestObject $ro
+     * @param \Ro\v0\User $ro
      * @param array|null    $ages
      *
      * @return array|null
      * @throws \Exception
      */
-    public function getUserList(RequestObject $ro, ? array $ages): array{
+    public function getUserList(\Ro\v0\User $ro, ? array $ages): array{
 
         $dvo = new \Dvo\User($ro, 'sex');
-        //相同字段 不同值 设置别名 别名类型与原名 需完全相同，遵循原名 set 方法
-        $dvo->_setAlias('age', 'minAge', $ages['minAge']);
-        $dvo->_setAlias('age', 'maxAge', $ages['maxAge']);
 
         //根据加入时间查询
         //if ($ro->getJoinTime())
         //    $dvo->setJoinTime(new UTCDateTime(strtotime($ro->getJoinTime())* 1000));
-
 
         $data = [];
         //查不同性别
@@ -49,6 +45,10 @@ class User extends Logic {
 
         //查年龄范围
         if (!empty($ages)){
+            //相同字段 不同值 设置别名 别名类型与原名 需完全相同，遵循原名 set 方法
+            $dvo->_setAlias('age', 'minAge', $ages['minAge']);
+            $dvo->_setAlias('age', 'maxAge', $ages['maxAge']);
+
             $data['$and'] = [
                 ['age' => ['$gte' => ':_minAge']],
                 ['age' => ['$lte' => ':_maxAge']],
@@ -88,7 +88,6 @@ class User extends Logic {
      * @param string $name
      *
      * @return bool
-     * @throws \Exception
      */
     public function existsName(string $name): bool{
         $dvo = new \Dvo\User();
@@ -103,12 +102,12 @@ class User extends Logic {
 
     /**
      * 添加用户逻辑
-     * @param RequestObject $ro
+     * @param \Ro\v0\User $ro
      *
      * @return bool
      * @throws \Exception
      */
-    public function addUser(RequestObject $ro): bool{
+    public function addUser(\Ro\v0\User $ro): bool{
 
         $dvo = new \Dvo\User();
         $dvo->setUserName($ro->getUserName())->setSex($ro->getSex())->setAge($ro->getAge());
@@ -116,12 +115,36 @@ class User extends Logic {
         return $this->getModel('User')->addUser($dvo);
     }
 
-    //更新用户信息
-    public function modifyUser(RequestObject $ro): bool{
+
+    /**
+     * 更新用户信息
+     * @param \Ro\v0\User $ro
+     *
+     * @return int
+     * @throws \Error\User
+     */
+    public function modifyUser(\Ro\v0\User $ro): int{
         $filter = new \Dvo\User($ro, 'id');
 
         $dvo = new \Dvo\User($ro, implode(',', Member::MODIFY_AVAILABLE_FILED));
 
-        var_dump($filter, $dvo);die;
+        //没有传入待更新值
+        if (true == $dvo->isEmpty())
+            throw new \Error\User('MODIFY_PARAM_INVALID');
+
+        return $this->getModel('User')->modifyUser($filter, $dvo);
+    }
+
+    /**
+     * 删除用户
+     * @param \Ro\v0\User $ro
+     *
+     * @return int
+     * @throws \Exception
+     */
+    public function removeUser(\Ro\v0\User $ro): int{
+        $dvo = new \Dvo\User($ro, 'id');
+
+        return $this->getModel('User')->removeUser($dvo);
     }
 }
