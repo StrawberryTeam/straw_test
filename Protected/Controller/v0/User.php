@@ -61,7 +61,7 @@ class User extends Controller{
     }
 
     /**
-     * 更新一个用户信息 @todo 更新值(post)或和条件值(get) 有相同字段 如果处理 Ro
+     * 更新一个用户信息
      * @Request(uri='/', target='put')
      * @Required(column='id')
      * @return Result
