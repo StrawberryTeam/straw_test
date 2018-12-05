@@ -16,8 +16,6 @@ return [
     'input_type' => 'form', //form(urlencoded) | json 2种方式都可以传2进制
     //返回参数格式
     'output_type' => 'json', //json | xml | html | jsonp
-    //本应用 module
-    'module_name' => 'pi',
     //default database
     'database' => 'mongo',
     //是否启用 cache 
