@@ -1,0 +1,45 @@
+<?php
+namespace Ro\v0;
+use Strawframework\Base\RequestObject;
+
+/**
+ * Ro
+ */
+class Article extends RequestObject {
+
+    /**
+     * 发布者 uid
+     * @Column (name='uid', type='string')
+     */
+    protected $uid;
+
+    /**
+     * @Column (name='query', type='string')
+     */
+    protected $query;
+
+    /**
+     * @Column (name='cids', type='string')
+     */
+    protected $cids;
+
+    /**
+     * @Column (name='tags', type='string')
+     */
+    protected $tags;
+
+    /**
+     * @Column (name='page', type='int')
+     */
+    protected $page;
+
+    /**
+     * @Column (name='limit', type='int')
+     */
+    protected $limit;
+
+    /**
+     * @Column (name='category', type='string')
+     */
+    protected $category;
+}
