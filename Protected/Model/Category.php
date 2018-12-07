@@ -1,11 +1,5 @@
 <?php
 namespace Model;
-use Dvo\User as UserDvo;
-use function MongoDB\BSON\fromPHP;
-use function MongoDB\BSON\toJSON;
-use MongoDB\BSON\UTCDateTime;
-use MongoDB\Driver\Cursor;
-use MongoDB\Model\BSONDocument;
 use Strawframework\Base\Model;
 
 /**
@@ -36,7 +30,8 @@ class Category extends Model {
         return $this->insert($dvo);
     }
 
-    public function getList(\Dvo\Category $dvo){
-        return $this->query($dvo)->getAll();
+    public function getList(\Dvo\Category $dvo) {
+        $res = $this->data(['cid' => ['$whereIn' => ':_cids']])->query($dvo)->getAll();
+        return $res;
     }
 }

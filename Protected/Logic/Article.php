@@ -24,7 +24,7 @@ class Article extends Logic {
 
         $dvo = new \Dvo\Category();
         if ($params['cids']){
-            $dvo->_setAlias(false, 'cids', $params['cids']);
+            $dvo->_setArrayAlias(false, 'cids', explode(',', $params['cids']));
         }
 
         return $this->getModel('Category')->getList($dvo);

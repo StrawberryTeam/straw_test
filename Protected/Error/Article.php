@@ -14,6 +14,7 @@ class Article extends \Strawframework\Base\Error {
     protected $errorCode = [
         'ID_INVALID' => '01',
         'CATEGORY_NAME_INVALID' => '02',
+        'CATEGROY_NOT_EXISTS' => '03',
     ];
 
     /**

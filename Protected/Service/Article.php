@@ -36,7 +36,16 @@ class Article extends Service {
 
     public function categoryExists($cids){
 
-        $this->getLogic('Article')->getCategoryList(['cids' => $cids]);
+        $category = $this->getLogic('Article')->getCategoryList(['cids' => $cids]);
+
+        $hasCids = array_column($category->toArray(), 'cid');
+
+        $noneCids = array_diff(explode(',', $cids), $hasCids);
+
+        if (count($noneCids) > 0)
+            throw new \Error\Article('CATEGROY_NOT_EXISTS', implode(',', array_values($noneCids)));
+
+        return true;
     }
 
     /**

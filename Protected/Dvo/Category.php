@@ -22,7 +22,11 @@ class Category extends DataViewObject {
     protected $category;
 
     /**
-     * @Column (name='update_at', type='int')
+     * @Column (name='update_at', type='string')
      */
     protected $updateAt;
+
+    public function getCid(){
+        return 'c' . $this->cid;
+    }
 }
