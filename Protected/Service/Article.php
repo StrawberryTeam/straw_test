@@ -15,7 +15,11 @@ class Article extends Service {
 
     public function addArticle(\Ro\v0\Article $ro): int{
 
-        $this->categoryExists($ro->getCids());
+        $nonCids = $this->categoryExists($ro->getCids());
+
+        //分类有部分不存在
+        if (true !== $nonCids)
+            throw new \Error\Article('CATEGROY_NOT_EXISTS', implode(',', array_values($nonCids)));
     }
 
     /**
@@ -34,16 +38,22 @@ class Article extends Service {
         }
     }
 
+    /**
+     * 分类id 是否存在 返回 true 或不存在的 id
+     * @param $cids
+     *
+     * @return array|bool
+     */
     public function categoryExists($cids){
 
         $category = $this->getLogic('Article')->getCategoryList(['cids' => $cids]);
 
         $hasCids = array_column($category->toArray(), 'cid');
 
-        $noneCids = array_diff(explode(',', $cids), $hasCids);
+        $nonCids = array_diff(explode(',', $cids), $hasCids);
 
-        if (count($noneCids) > 0)
-            throw new \Error\Article('CATEGROY_NOT_EXISTS', implode(',', array_values($noneCids)));
+        if (count($nonCids) > 0)
+            return $nonCids;
 
         return true;
     }
