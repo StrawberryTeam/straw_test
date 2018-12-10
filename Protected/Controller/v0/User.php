@@ -87,4 +87,15 @@ class User extends Controller{
 
         return new Result(Code::SUCCESS, '', ['remove_num' => $removeNum]);
     }
+
+    /**
+     * 模拟登录，输入用户id 返回该id登录成功的token
+     * @Request(uri='/logged', target='post')
+     * @Required(column='id')
+     */
+    public function logged(){
+
+        $token = $this->getService('Member')->logged($this->getRequests()->getId());
+        return new Result(Code::SUCCESS, 'Logging Success', ['token' => $token]);
+    }
 }

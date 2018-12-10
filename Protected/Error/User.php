@@ -19,6 +19,7 @@ class User extends \Strawframework\Base\Error {
         'USER_EXISTS' => '05',
         'MODIFY_PARAM_INVALID' => '06',
         'MODIFY_NOTFOUND' => '07',
+        'LOGIN_ERROR' => '08',
     ];
 
     /**

@@ -31,7 +31,7 @@ class Article extends RequestObject {
     /**
      * @Column (name='page', type='int')
      */
-    protected $page;
+    protected $offset;
 
     /**
      * @Column (name='limit', type='int')
@@ -42,4 +42,14 @@ class Article extends RequestObject {
      * @Column (name='category', type='string')
      */
     protected $category;
+
+    /**
+     * @Column (name='title', type='string')
+     */
+    protected $title;
+
+    /**
+     * @Column (name='content', type='string')
+     */
+    protected $content;
 }

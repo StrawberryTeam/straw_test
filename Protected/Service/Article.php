@@ -8,18 +8,34 @@ use Strawframework\Base\Service;
 
 class Article extends Service {
 
-    public function getList(\Ro\v0\Article $ro): array{
+    /**
+     * 返回符合条件的条数与内容
+     * @param \Ro\v0\Article $ro
+     *
+     * @return array
+     */
+    public function getList(\Ro\v0\Article $ro): array {
+
 
         return $this->getLogic('Article')->getList($ro);
     }
 
-    public function addArticle(\Ro\v0\Article $ro): int{
+    /**
+     * 验证内容是否合法
+     * @param \Ro\v0\Article $ro
+     *
+     * @return int
+     * @throws \Error\Article
+     */
+    public function addArticle(\Ro\v0\Article $ro): bool{
 
         $nonCids = $this->categoryExists($ro->getCids());
 
         //分类有部分不存在
         if (true !== $nonCids)
             throw new \Error\Article('CATEGROY_NOT_EXISTS', implode(',', array_values($nonCids)));
+
+        return $this->getLogic('Article')->addArticle($ro);
     }
 
     /**
@@ -29,7 +45,7 @@ class Article extends Service {
      * @return bool
      * @throws \Error\Article
      */
-    public function addCategory(\Ro\v0\Article $ro): int{
+    public function addCategory(\Ro\v0\Article $ro): bool{
 
         if (false == $this->validCategory($ro->getCategory())){
             throw new \Error\Article('CATEGORY_NAME_INVALID', $ro->getCategory(), '分类名称长度 2 - 10 位');

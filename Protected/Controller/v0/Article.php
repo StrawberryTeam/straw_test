@@ -2,6 +2,8 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
 use Common\Code;
+use Strawframework\Base\RequestObject;
+use Strawframework\Common\Valid;
 
 /**
  * @Ro (name='Article')
@@ -9,20 +11,37 @@ use Common\Code;
 class Article extends Controller{
 
     /**
+     * 查询所有内容
      * @Request(uri='/list', target='get')
      */
     public function list(){
 
-        $this->getService('Article')->getList($this->getRequests());
+        list($count, $list) = $this->getService('Article')->getList($this->getRequests());
+
+        if (0 == $count)
+            return new Result(Code::IS_EMPTY);
+
+        return new Result(Code::SUCCESS, '', compact($count, $list));
     }
 
     /**
+     * 添加新文章
      * @Request(uri='/', target='post')
-     * @Required(column='title,content,cids')
+     * @Required(column='uid,title,content,cids')
      */
     public function newArticle(){
+        $uid = $this->getRequests()->getUid();
+        Valid::header('token', function($token) use ($uid){
+            //登录失败 (模拟)
+            if (false == $this->getService('Member')->validToken($token, $uid))
+                throw new \Error\User('LOGIN_ERROR');
+        });
 
-        $this->getService('Article')->addArticle($this->getRequests());
+        if (false == $this->getService('Article')->addArticle($this->getRequests()))
+            return new Result(Code::FAIL, '添加失败, 请重试');
+        else{
+            return new Result(Code::SUCCESS);
+        }
     }
 
     /**
@@ -34,7 +53,10 @@ class Article extends Controller{
      */
     public function newCategory(){
 
-        $cateId = $this->getService('Article')->addCategory($this->getRequests());
-        return new Result(Code::SUCCESS, '', ['cate_id' => $cateId]);
+
+        if (false == $this->getService('Article')->addCategory($this->getRequests()))
+            return new Result(Code::FAIL, '添加失败, 请重试');
+
+        return new Result(Code::SUCCESS);
     }
 }

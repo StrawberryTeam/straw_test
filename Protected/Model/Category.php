@@ -25,7 +25,7 @@ class Category extends Model {
      *
      * @return bool|mixed|\MongoDB\InsertManyResult|\MongoDB\InsertOneResult
      */
-    public function addCategory(\Dvo\Category $dvo): int{
+    public function addCategory(\Dvo\Category $dvo): bool{
 
         return $this->insert($dvo);
     }

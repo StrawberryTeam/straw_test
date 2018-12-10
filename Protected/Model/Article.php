@@ -25,4 +25,34 @@ class Article extends Model {
         parent::__construct('mysql');
     }
 
+    /**
+     * 添加一个新内容
+     * @param \Dvo\Article $dvo
+     *
+     * @return bool|mixed|\MongoDB\InsertManyResult|\MongoDB\InsertOneResult
+     */
+    public function addArticle(\Dvo\Article $dvo): bool{
+        return $this->insert($dvo);
+    }
+
+    /**
+     * 获取所有内容
+     * @param \Dvo\Article $dvo
+     *
+     * @return array|\Illuminate\Database\Eloquent\Builder|mixed|null
+     */
+    public function getList(\Dvo\Article $dvo, array $data = [], int $offset = 0, int $limit = 10): object{
+        return $this->query($dvo)->data($data)->limit($limit)->offset($offset)->getAll();
+    }
+
+    /**
+     * 获取符合条件的条数
+     * @param \Dvo\Article $dvo
+     * @param array        $data
+     *
+     * @return int
+     */
+    public function getCount(\Dvo\Article $dvo, array $data = []): int{
+        return $this->query($dvo)->data($data)->count('id');
+    }
 }

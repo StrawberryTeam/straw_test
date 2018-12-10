@@ -1,6 +1,8 @@
 <?php
 namespace Logic;
+use Strawframework\Base\DataViewObject;
 use Strawframework\Base\Logic;
+use Strawframework\Base\RequestObject;
 
 /**
  * Article logic
@@ -9,17 +11,38 @@ use Strawframework\Base\Logic;
 class Article extends Logic {
 
 
+    /**
+     * 获得所有内容
+     * @param \Ro\v0\Article $ro
+     *
+     * @return array|\Illuminate\Database\Eloquent\Builder|mixed|null
+     * @throws \Exception
+     */
     public function getList(\Ro\v0\Article $ro){
 
         $dvo = new \Dvo\Article();
-        if ($ro->getCreatedUid())
-            $dvo->setCreatedUid($ro->getCreatedUid());
+        if ($ro->getUid())
+            $dvo->setCreatedUid($ro->getUid());
 
 
         $data = [];
-        return $this->getModel('Article')->getList($dvo, $data);
+
+        $count = $this->getModel('Article')->getCount($dvo, $data);
+
+        //没有内容
+        if (0 == $count)
+            return [0, null];
+
+        return [$count, $this->getModel('Article')->getList($dvo, $data, $ro->getOffset() ?: 0, $ro->getLimit() ?: 0)];
     }
 
+    /**
+     * 所有分类
+     * @param array $params
+     *
+     * @return array|\Illuminate\Database\Eloquent\Builder|mixed|null
+     * @throws \Exception
+     */
     public function getCategoryList(array $params){
 
         $dvo = new \Dvo\Category();
@@ -37,9 +60,26 @@ class Article extends Logic {
      * @return bool
      * @throws \Exception
      */
-    public function addCategory(string $category): int{
+    public function addCategory(string $category): bool{
         $dvo = new \Dvo\Category();
         $dvo->setCategory($category);
         return $this->getModel('Category')->addCategory($dvo);
+    }
+
+    /**
+     * 添加内容
+     * @param \Ro\v0\Article $ro
+     *
+     * @return bool|mixed|\MongoDB\InsertManyResult|\MongoDB\InsertOneResult
+     * @throws \Exception
+     */
+    public function addArticle(\Ro\v0\Article $ro): bool{
+        $dvo = new \Dvo\Article($ro, [
+            'title' => 'title',
+            'content' => 'content',
+            'uid' => 'createdUid'
+        ]);
+
+        return $this->getModel('Article')->addArticle($dvo);
     }
 }

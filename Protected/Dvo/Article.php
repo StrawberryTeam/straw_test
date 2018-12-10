@@ -40,4 +40,15 @@ class Article extends DataViewObject {
      * @Column (name='update_at', type='int')
      */
     protected $updateAt;
+
+    //展示插入的内容
+    public function getContent(){
+        return htmlspecialchars_decode($this->content);
+    }
+
+    //插入的内容
+    public function setContent($content){
+        $this->content = htmlspecialchars($content);
+        return $this;
+    }
 }
