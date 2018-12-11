@@ -7,6 +7,10 @@ use Strawframework\Base\Service;
  */
 
 class Article extends Service {
+    public function getArticle(int $id){
+
+        $this->getLogic('Article')->getArticle($id);
+    }
 
     /**
      * 返回符合条件的条数与内容
@@ -17,7 +21,11 @@ class Article extends Service {
     public function getList(\Ro\v0\Article $ro): array {
 
 
-        return $this->getLogic('Article')->getList($ro);
+        list($c, $a) = $this->getLogic('Article')->getList($ro);
+        foreach ($a as $value) {
+            var_dump($value);
+        }
+        die;
     }
 
     /**

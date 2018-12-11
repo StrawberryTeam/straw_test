@@ -24,6 +24,16 @@ class Article extends Controller{
     }
 
     /**
+     * 查询一篇内容
+     * @Request(uri='/', target='get')
+     * @Required(column='id')
+     */
+    public function article(){
+
+        $this->getService('Article')->getArticle($this->getRequests()->getId());
+    }
+
+    /**
      * 添加新文章
      * @Request(uri='/', target='post')
      * @Required(column='uid,title,content,cids')

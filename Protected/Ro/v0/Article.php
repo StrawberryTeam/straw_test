@@ -8,6 +8,11 @@ use Strawframework\Base\RequestObject;
 class Article extends RequestObject {
 
     /**
+     * @Column (name='id', type='int')
+     */
+    protected $id;
+
+    /**
      * 发布者 uid
      * @Column (name='uid', type='string')
      */

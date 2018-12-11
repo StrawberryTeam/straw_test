@@ -10,6 +10,9 @@ use Strawframework\Base\RequestObject;
 
 class Article extends Logic {
 
+    public function getArticle(int $id){
+        return $this->getModel('Article')->getArticle($id);
+    }
 
     /**
      * 获得所有内容
