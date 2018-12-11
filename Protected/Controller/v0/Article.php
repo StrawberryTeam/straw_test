@@ -2,7 +2,6 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
 use Common\Code;
-use Strawframework\Base\RequestObject;
 use Strawframework\Common\Valid;
 
 /**
@@ -21,7 +20,7 @@ class Article extends Controller{
         if (0 == $count)
             return new Result(Code::IS_EMPTY);
 
-        return new Result(Code::SUCCESS, '', compact($count, $list));
+        return new Result(Code::SUCCESS, '', compact('count', 'list'));
     }
 
     /**
@@ -31,11 +30,15 @@ class Article extends Controller{
      */
     public function newArticle(){
         $uid = $this->getRequests()->getUid();
-        Valid::header('token', function($token) use ($uid){
+        if (false == Valid::header('token', function($token) use ($uid){
             //登录失败 (模拟)
             if (false == $this->getService('Member')->validToken($token, $uid))
                 throw new \Error\User('LOGIN_ERROR');
-        });
+            return true;
+        })){
+            //未登录
+            return new Result(Code::FORBIDDEN);
+        }
 
         if (false == $this->getService('Article')->addArticle($this->getRequests()))
             return new Result(Code::FAIL, '添加失败, 请重试');

@@ -29,7 +29,7 @@ class Article extends RequestObject {
     protected $tags;
 
     /**
-     * @Column (name='page', type='int')
+     * @Column (name='offset', type='int')
      */
     protected $offset;
 

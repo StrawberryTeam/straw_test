@@ -41,8 +41,11 @@ class Article extends Model {
      *
      * @return array|\Illuminate\Database\Eloquent\Builder|mixed|null
      */
-    public function getList(\Dvo\Article $dvo, array $data = [], int $offset = 0, int $limit = 10): object{
-        return $this->query($dvo)->data($data)->limit($limit)->offset($offset)->getAll();
+    public function getList(\Dvo\Article $dvo, array $data = [], ? int $offset = null, ? int $limit = null): object{
+        $dvo->_setAlias(false, 'idNum', 12);
+        $a = $this->query($dvo)->orWhere('id', '>', ':_idNum')->data($data)->getAll();
+        var_dump($a);die;
+        return $this->query($dvo)->data($data)->limit($limit ?? 10)->offset($offset ?? 0)->getAll();
     }
 
     /**

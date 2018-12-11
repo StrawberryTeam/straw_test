@@ -18,7 +18,7 @@ class Article extends Logic {
      * @return array|\Illuminate\Database\Eloquent\Builder|mixed|null
      * @throws \Exception
      */
-    public function getList(\Ro\v0\Article $ro){
+    public function getList(\Ro\v0\Article $ro): array{
 
         $dvo = new \Dvo\Article();
         if ($ro->getUid())
@@ -33,7 +33,7 @@ class Article extends Logic {
         if (0 == $count)
             return [0, null];
 
-        return [$count, $this->getModel('Article')->getList($dvo, $data, $ro->getOffset() ?: 0, $ro->getLimit() ?: 0)];
+        return [$count, $this->getModel('Article')->getList($dvo, $data, $ro->getOffset(), $ro->getLimit())];
     }
 
     /**
