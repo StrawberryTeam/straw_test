@@ -22,10 +22,12 @@ return [
     'cache' => 'redis',
     //默认缓存时间 5min = 300
     'cache_expire' => 0,
+    //默认的日志方法
+    'log' => 'file',
     //加载其他配置文件
     'ext' => [
         'databases',
         'caches',
-        'log'
+        'logs'
     ]
 ];
