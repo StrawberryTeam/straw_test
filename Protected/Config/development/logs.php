@@ -39,12 +39,9 @@ return [
         'collectionName' => 'logs', //表名
         'mongoConnect'   => 'mongodb://127.0.0.1:27017/', //连接 mongodb mongodb://username:password@hostname:port
     ],
+    //es monolog 2.0 版本之后 在加
     'elastic' => [
         'type'   => 'elastic',
-        'host'   => '127.0.0.1', //es host
-        'port'   => '9200',
-        'scheme' => 'https', //http or https
-        'user'   => '',
-        'pass'   => ''
+        'host'   => '127.0.0.1:9200', //es host
     ],
 ];
