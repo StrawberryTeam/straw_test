@@ -3,6 +3,7 @@ namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
 use Common\Code;
 use Strawframework\Base\Log;
+use Strawframework\Base\RequestObject;
 
 /**
  * @Ro (name='User')
@@ -11,7 +12,7 @@ class User extends Controller{
 
     /** @Request(uri="/log",target="get") */
     public function logtest(){
-        var_dump(Log::getInstance()->setType('mongodb')->setType('file')->error('测试测试测试222', 'getinfo', ['12121l' => 'fsdfsdfs']));
+        (Log::getInstance()->setType('elastic')->setType('file')->error('2018errortest', 'getinfo', RequestObject::$call));
     }
 
     /**
