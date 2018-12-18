@@ -2,16 +2,19 @@
 namespace Controller\v0;
 use Strawframework\Base\Controller, Strawframework\Base\Result;
 use Common\Code;
+use Strawframework\Base\Log;
+use Strawframework\Base\RequestObject;
 
 /**
  * @Ro (name='User')
  */
 class User extends Controller{
-    /* @Request(uri="/log",target="get") */
-    public function logtest(){
-        var_dump(Log::getInstance()->info('测试测试测试222',(array)$this->getRequests()));
 
+    /** @Request(uri="/log",target="get") */
+    public function logtest(){
+        (Log::getInstance()->setType('elastic')->setType('file')->error('2018errortest', 'getinfo', RequestObject::$call));
     }
+
     /**
      * 取一个用户
      * @Request (uri="/", target='get')
@@ -61,7 +64,7 @@ class User extends Controller{
     }
 
     /**
-     * 更新一个用户信息 @todo 更新值(post)或和条件值(get) 有相同字段 如果处理 Ro
+     * 更新一个用户信息
      * @Request(uri='/', target='put')
      * @Required(column='id')
      * @return Result
@@ -86,5 +89,16 @@ class User extends Controller{
         $removeNum = $this->getService('Member')->removeUser($this->getRequests());
 
         return new Result(Code::SUCCESS, '', ['remove_num' => $removeNum]);
+    }
+
+    /**
+     * 模拟登录，输入用户id 返回该id登录成功的token
+     * @Request(uri='/logged', target='post')
+     * @Required(column='id')
+     */
+    public function logged(){
+
+        $token = $this->getService('Member')->logged($this->getRequests()->getId());
+        return new Result(Code::SUCCESS, 'Logging Success', ['token' => $token]);
     }
 }

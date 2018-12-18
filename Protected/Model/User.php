@@ -95,6 +95,12 @@ class User extends Model {
         return $result->getModifiedCount();
     }
 
+    /**
+     * 删除用户
+     * @param UserDvo $dvo
+     *
+     * @return int
+     */
     public function removeUser(UserDvo $dvo): int{
 
         return $this->delete($dvo);

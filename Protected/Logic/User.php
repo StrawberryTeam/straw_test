@@ -76,7 +76,6 @@ class User extends Logic {
         try{
             $userInfo = $this->getModel('User')->getUser($dvo);
         }catch (\Exception $e){
-
             //@todo set log
             throw new \Error\User('INPUT_ERROR', $id);
         }

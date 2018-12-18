@@ -130,4 +130,27 @@ class Member extends Service {
 
         return $this->getLogic('User')->removeUser($ro);
     }
+
+
+    /**
+     * 模拟用户登录之后并返回 token 供其他接口验证
+     * @param string $id
+     *
+     * @return string
+     */
+    public function logged(string $id): string{
+
+        return password_hash($id, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * 模拟验证用户是否登录成功
+     * @param string $token
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function validToken(string $token, string $id): bool{
+        return password_verify($id, $token);
+    }
 }

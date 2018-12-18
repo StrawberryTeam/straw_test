@@ -20,10 +20,11 @@ return [
         'DB_TYPE' => 'mysql',
         'DB_HOST' => '127.0.0.1',
         'DB_USER' => 'root',
-        'DB_PWD'  => '123456',
+        'DB_PWD'  => '1234',
         'WRITE_MASTER' => false, //读写分离
         'DB_PREFIX' => '',
-        'DB_NAME' => '',
-        'DB_PORT' => 3306
+        'DB_NAME' => 'kiwi_pro',
+        'DB_PORT' => 3306,
+        'DB_CHARSET' => 'UTF8'
     ],
 ];
