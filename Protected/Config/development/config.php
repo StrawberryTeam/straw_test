@@ -21,7 +21,7 @@ return [
     //default database
     'database' => 'mongo',
     //是否启用 cache 
-    'cache' => 'redis',
+    'cache' => 'file',
     //默认缓存时间 5min = 300
     'cache_expire' => 0,
     //加载其他配置文件
